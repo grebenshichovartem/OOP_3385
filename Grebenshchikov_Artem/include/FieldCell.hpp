@@ -17,15 +17,15 @@ class FieldCell{
 private:
     Ship* ship;
     CellStatus status;
-    int indexseg;
+    int indexSeg{};
 public:
-    explicit FieldCell(Ship* ship = nullptr, CellStatus cellstatus = CellStatus::Empty);
+    explicit FieldCell(Ship* ship = nullptr, CellStatus cellStatus = CellStatus::Empty);
     void setShip(Ship* ship);
     void setStatus(CellStatus cellStatus);
-    void setIndexseg(int index);
+    void setIndexSeg(int index);
     CellStatus getStatus() const;
     Ship* getShip() const;
-    int getIndexseg() const;
+    int getIndexSeg() const;
 };
 
 

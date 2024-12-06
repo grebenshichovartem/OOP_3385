@@ -14,12 +14,13 @@ enum class SegmentStatus {
 
 class Ship{
 public:
-    Ship(int length, bool ishorizontally);
-    void setHorizontally(bool isHorisontally);
+    Ship(int length, bool isHorizontally);
+    void setHorizontally(bool isHorizontally);
+    void setSegmentStatus(int index, SegmentStatus stat);
     bool getHorizontally() const;
     int getLength() const;
-    SegmentStatus getSegmentStatus(int i);
-    bool takeDamage(int indexsegment);
+    SegmentStatus getSegmentStatus(int i) const;
+    bool takeDamage(int indexSegment);
     bool isDestroyed() const;
     ~Ship();
 private:

@@ -30,4 +30,18 @@ public:
 };
 
 
+class FileException : public std::runtime_error {
+public:
+    explicit FileException(const std::string& message)
+            : std::runtime_error(message) {}
+};
+
+
+class LoadInFileException : public std::runtime_error {
+public:
+    explicit LoadInFileException(const std::string& message)
+            : std::runtime_error(message) {}
+};
+
+
 #endif

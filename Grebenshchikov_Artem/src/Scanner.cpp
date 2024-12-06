@@ -1,36 +1,47 @@
 #include <iostream>
 #include "Scanner.h"
-#include "SafeInput.h"
 
 
 
-void Scanner::printAbility() {
-    std::cout << "Была выбрана способность: Сканер" << std::endl;
+Scanner::Scanner(const std::shared_ptr<GameField>& gameField, const std::shared_ptr<ManagerIO>& managerIO) : weakGameField(gameField), weakManagerIO(managerIO), x(0), y(0){}
+
+
+std::string Scanner::toString() {
+    return "Scanner";
 }
 
 
-bool Scanner::use(GameField& gameField, ManagerShip& manager) {
-    int x, y;
-    std::cout << "Введите координаты верхнего левого угла квадрата 2x2" << std::endl;
-    x = safeInput();
-    y = safeInput();
-    if (x < 0 || y < 0 || x >= gameField.getWidth() - 1 || y >= gameField.getHeight() - 1) {
-        std::cout << "Координаты вне границ поля" << std::endl;
-        return false;
-    }
-
-    for (int dy = 0; dy < 2; dy++) {
-        for (int dx = 0; dx < 2; dx++) {
-            int newX = x + dx;
-            int newY = y + dy;
-
-            if (gameField.getCellStatus(newY, newX) == CellStatus::Ship) {
-                std::cout << "Был найден корабль" << std::endl;
-                return false;
-            }
+answerAbilities Scanner::use() {
+    auto gameField = weakGameField.lock();
+    auto managerIO = weakManagerIO.lock();
+    managerIO->outputMassage("Выбрана способность Scanner - введите координаты для сканирования области 2x2\n");
+    std::pair<int, int> coord;
+    int counter = 0;
+    while (counter < 40) {
+        counter++;
+        coord = managerIO->inputPairInt();
+        x = coord.first;
+        y = coord.second;
+        if (!(x > 0 && x < (gameField->getWidth()) && y > 0 && y < (gameField->getHeight()))) {
+            break;
+        } else {
+            managerIO->outputMassage("Ни одна клетка из области с данными координатами не лежит в поле");
         }
     }
 
-    std::cout << "Не был найден корабль" << std::endl;
-    return false;
+    if (counter != 40) {
+        for (int dy = 0; dy < 2; dy++) {
+            for (int dx = 0; dx < 2; dx++) {
+                int newX = x + dx;
+                int newY = y + dy;
+                if (newX < gameField->getWidth() && newY < gameField->getHeight()) {
+                    if (gameField->getCellStatus(newY, newX) == CellStatus::Ship)
+                        return answerAbilities::ScannerFoundShip;
+                } else {
+                    continue;
+                }
+            }
+        }
+    }
+    return answerAbilities::ScannerNotFoundShip;
 }

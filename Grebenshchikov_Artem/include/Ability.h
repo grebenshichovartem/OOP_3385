@@ -1,17 +1,24 @@
 #ifndef ABILITY_H
 #define ABILITY_H
 
+#include <string>
 
-#include "GameField.hpp"
-#include "ManagerShip.hpp"
 
+
+enum class answerAbilities{
+    BombardmentSuccess,
+    BombardmentDestroyedShip,
+    ScannerFoundShip,
+    DoubleDamage,
+    ScannerNotFoundShip
+};
 
 
 class Ability {
 public:
     virtual ~Ability() = default;
-    virtual void printAbility() = 0;
-    virtual bool use(GameField& gameField, ManagerShip& manager) = 0;
+    virtual std::string toString() = 0;
+    virtual answerAbilities use() = 0;
 };
 
 

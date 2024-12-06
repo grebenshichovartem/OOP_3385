@@ -2,11 +2,11 @@
 
 
 
-FieldCell::FieldCell(Ship* ship, CellStatus status) : ship(ship), status(status){}
+FieldCell::FieldCell(Ship* ship, CellStatus cellStatus) : ship(ship), status(cellStatus){}
 
 
-void FieldCell::setShip(Ship* ship) {
-    this->ship = ship;
+void FieldCell::setShip(Ship* newShip) {
+    ship = newShip;
 }
 
 
@@ -15,8 +15,8 @@ void FieldCell::setStatus(CellStatus cellStatus) {
 }
 
 
-void FieldCell::setIndexseg(int index) {
-    indexseg = index;
+void FieldCell::setIndexSeg(int index) {
+    indexSeg = index;
 }
 
 
@@ -30,6 +30,6 @@ Ship* FieldCell::getShip() const {
 }
 
 
-int FieldCell::getIndexseg() const {
-    return indexseg;
+int FieldCell::getIndexSeg() const {
+    return indexSeg;
 }

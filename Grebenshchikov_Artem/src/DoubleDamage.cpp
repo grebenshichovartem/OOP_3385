@@ -3,11 +3,16 @@
 
 
 
-void DoubleDamage::printAbility() {
-    std::cout << "Была выбрана способность: Двойной урон" << '\n' << "Введите координаты" << std::endl;
+DoubleDamage::DoubleDamage(const std::shared_ptr<ManagerIO>& managerIO) : weakManagerIO(managerIO){}
+
+
+std::string DoubleDamage::toString() {
+    return "DoubleDamage";
 }
 
 
-bool DoubleDamage::use(GameField& gameField, ManagerShip& manager) {
-    return true;
+answerAbilities DoubleDamage::use() {
+    auto managerIO = weakManagerIO.lock();
+    managerIO->outputMassage("Была выбрана способность DoubleDamage\n");
+    return answerAbilities::DoubleDamage;
 }
